@@ -5,17 +5,17 @@ resource "aws_elastic_beanstalk_application" "elasticapp" {
   name = var.application_name
 }
 
-data "aws_elastic_beanstalk_solution_stack" "php_latest" {
+data "aws_elastic_beanstalk_solution_stack" "nodejs_latest" {
   most_recent = true
 
-  name_regex = "^64bit Amazon Linux (.*) running PHP 8.0$"
+  name_regex = "^64bit Amazon Linux (.*) running Node.js 16$"
 }
 
 
 resource "aws_elastic_beanstalk_environment" "beanstalkappenv" {
   name                ="${var.app_tags}-Api"
   application         = var.application_name
-  solution_stack_name = data.aws_elastic_beanstalk_solution_stack.php_latest.name
+  solution_stack_name = data.aws_elastic_beanstalk_solution_stack.nodejs_latest.name
   tier                = "WebServer"
   tags = {
       APP_NAME = var.app_tags
